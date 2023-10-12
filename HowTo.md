@@ -23,5 +23,5 @@ A script has been develop to do this automatically,
 
 1. Assign the label Islet to the annotations of the islets
 2. Go to **Automate** > **Scripts Editor**
-3. Copy and paste the script name **scripts/annotations_to_detections.groovy**
+3. Copy and paste the script name [**scripts/annotations_to_detections.groovy**](scripts/annotations_to_detections.groovy)
 4. Click on **Run**
