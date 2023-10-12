@@ -8,13 +8,26 @@ To install qupath:
    1. It will look like: **C:\Users\\user-name\\QuPath-[version]**
 
 
-# Segment Anything SAM[^2][^3]
+# Segment Anything SAM [^2] [^3]
 
-Follow the instruction on: https://github.com/ksugar/qupath-extension-sam
+Follow the instruction on: 
+
+* https://github.com/ksugar/qupath-extension-sam
+* https://github.com/ksugar/samapi
 
 1. Download the .jar
 2. Drag and drop the .jar file in QuPath or Copy the .jar to
    * **"C:\Users\\user-name\\QuPath\\v0.4\\"** folder (e.g. "C:\Users\jdoe\\QuPath\\v0.4\\")
+
+
+## Usage
+1. Activate the conda environment 
+```
+conda activate samapi
+uvicorn samapi.main:app --workers 2
+```
+2. Open QuPath
+3. Go to **Extensions** > **SAM** > **SAM API**
 
 # References
 
