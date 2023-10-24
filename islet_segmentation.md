@@ -1,4 +1,4 @@
-# Islet segmentation 
+# [Islet segmentation Basic]
 
 After creating a project in QuPath and uploading the images, we can start segmenting the islets.
 
@@ -17,3 +17,17 @@ After creating a project in QuPath and uploading the images, we can start segmen
 7. Wait for the segmentation to finish
 8. Save the data
 ![SAM-segmentation](/img/iselt-segm_SAM-ALL-Process.png)
+
+
+# Islet segmentation Advanced
+
+1. Open one image
+2. Go to **Classify** -> **Pixel classification** -> **Create Threshold**
+3. create a new Threshold where the class is Islet and the 
+   * Adjust properly the values where the majority of the islets are selected
+![threshold](/img/islet_create-threshold.png)
+4. Go through the image and remove non islet objects, create annotations for those islets using the previous method
+5. Repeat steps 4-8 from the basic segmentation [this step will take time]
+![fast-SAM-output](img/iselt-segm_example-fast-SAM.png)
+![fast-SAM-output_zoom](img/iselt-segm_example-fast-SAM-zoom.png)
+### As you can see, the output is not as good as the basic segmentation, but it is faster and can be used as a starting point for the basic segmentation
