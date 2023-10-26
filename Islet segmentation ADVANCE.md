@@ -1,17 +1,13 @@
 # QuPath - Islet segmentation
 
 Created time: October 26, 2023 1:12 PM
-<html>
-<div style="background-color: #FFFF00; color:black; font-size:20px">
 
-⚠️ Remember to save the files while working with them!
+> [!WARNING]
+> ⚠️ Remember to save the files while working with them!
 
-</div>
-</html>
 1. Open the project → Project… → Open
 2. Run the script `color-deconvolution.groovy`
 3. Go to the image tab 
-    
     ![Untitled](/img/islet-segmentation-advance/Untitled.png)
     
 4. Create a square annotation around each distinct color and select the annotation that correspond to each channel. Each annotation has to have only the stain vector
