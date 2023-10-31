@@ -2,17 +2,12 @@
 
 Created time: October 26, 2023 1:12 PM
 
-<div style="background-color: #FFFF00; color:black; font-size:20px">
-<aside>
-⚠️ Remember to save the files while working with them!
-
-</aside>
-</div>
+> [!WARNING]
+> ⚠️ Remember to save the files while working with them!
 
 1. Open the project → Project… → Open
 2. Run the script `color-deconvolution.groovy`
 3. Go to the image tab 
-    
     ![Untitled](/img/islet-segmentation-advance/Untitled.png)
     
 4. Create a square annotation around each distinct color and select the annotation that correspond to each channel. Each annotation has to have only the stain vector
