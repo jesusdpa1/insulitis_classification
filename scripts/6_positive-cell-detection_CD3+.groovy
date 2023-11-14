@@ -1,6 +1,9 @@
 /// import libraries
+import qupath.lib.gui.commands.Commands;
 import qupath.lib.objects.PathAnnotationObject
+import qupath.lib.objects.PathDetectionObject
 import qupath.lib.objects.PathObject
+import qupath.lib.objects.PathCellObject
 import static qupath.lib.scripting.QP.*
 import static qupath.lib.gui.scripting.QPEx.*
 
@@ -22,11 +25,14 @@ if (!cal.hasPixelSizeMicrons()) {
 
 double expandPixels = expandMarginMicrons / cal.getAveragedPixelSizeMicrons()
 
-//
+// prevents the glucagon/insulin/background detection from being removed
+def allDetections = getDetectionObjects()
+def nonCellObjects = allDetections.findAll { !(it instanceof PathCellObject) }
+
+
 def annotations = hierarchy.getAnnotationObjects()
 
-
-//
+// runs the Positive cell detection plugin
 def jsonParams = """{
     "detectionImageBrightfield": "Optical density sum",
     "requestedPixelSizeMicrons": 1.0,
@@ -53,12 +59,12 @@ def jsonParams = """{
 selectAnnotations();
 runPlugin('qupath.imagej.detect.cells.PositiveCellDetection', jsonParams)
 
-//
-def cells = getCellObjects()
-
 // Filter to get only 'Negative' cells
+def cells = getCellObjects()
 def negativeCells = cells.findAll { it.getPathClass() == getPathClass("Negative") }
 removeObjects(negativeCells, true)
-//
+addObjects(nonCellObjects)
 
+// updated the hierarchy of the objects
+Commands.insertSelectedObjectsInHierarchy(imageData)
 fireHierarchyUpdate()
