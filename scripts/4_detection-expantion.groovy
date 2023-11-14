@@ -9,6 +9,9 @@ import org.locationtech.jts.geom.PrecisionModel
 import java.awt.Rectangle
 import java.awt.geom.Area
 
+def suffixName = "expanded"
+def counter = 1
+
 double expandMarginMicrons = 20.0
 
 // Extract the main info we need
@@ -26,17 +29,21 @@ if (!cal.hasPixelSizeMicrons()) {
 
 double expandPixels = expandMarginMicrons / cal.getAveragedPixelSizeMicrons()
 
+def annotations = getAnnotationObjects()
 
-def isletsList = getAnnotationObjects().find{it.getPathClass() == getPathClass("Islet")}
+def isletsList = annotations.findAll{it.getPathClass() == getPathClass("Islet")}
 
 annotationToAdd = []
 
 isletsList.each{ it ->
+        def baseName = it.getName() 
+        def newName = (baseName ? "${baseName}_$suffixName" : suffixName) // Generate new name
         currentArea = it.getROI().getGeometry()
         areaExpansion = currentArea.buffer(expandPixels)
 
         roiExpansion = GeometryTools.geometryToROI(areaExpansion, plane)
         annotationExpansion = PathObjects.createAnnotationObject(roiExpansion, getPathClass("IsletExpanded"))
+        annotationExpansion.setName(newName)
         annotationToAdd << annotationExpansion
 
 }
