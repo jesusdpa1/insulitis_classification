@@ -1,7 +1,7 @@
 setImageType('BRIGHTFIELD_OTHER');
 
 setColorDeconvolutionStains("""{
-    "Name" : "Test",
+    "Name" : "HE_Insulitis",
     "Stain 1" : "Glucagon",
     "Values 1" : "0.694 0.634 0.342",
     "Stain 2" : "Insulin",

@@ -7,9 +7,6 @@ def baseName = "islet"
 def imageData = getCurrentImageData()
 def hierarchy = imageData.getHierarchy()
 
-// Get the root annotation hierarchy
-//def hierarchy = project.getHierarchy()
-
 // Create a counter for the sequence number
 def counter = 1
 

@@ -56,15 +56,19 @@ def jsonParams = """{
     "singleThreshold": true
 }"""
 
-selectAnnotations();
+selectAnnotations()
 runPlugin('qupath.imagej.detect.cells.PositiveCellDetection', jsonParams)
 
-// Filter to get only 'Negative' cells
-def cells = getCellObjects()
-def negativeCells = cells.findAll { it.getPathClass() == getPathClass("Negative") }
-removeObjects(negativeCells, true)
 addObjects(nonCellObjects)
 
+selectObjects()
 // updated the hierarchy of the objects
 Commands.insertSelectedObjectsInHierarchy(imageData)
+
+// Filter to get only 'Negative' cells -> removal of objects should happend after solving hierarchy
+def cells = getCellObjects()
+def negativeCells = cells.findAll { it.getPathClass() == getPathClass("Negative") }
+
+removeObjects(negativeCells, true)
+
 fireHierarchyUpdate()
