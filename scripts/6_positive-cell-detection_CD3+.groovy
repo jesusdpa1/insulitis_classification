@@ -38,12 +38,18 @@ def nameMean = "ROI: ${formattedPixelSize} µm per pixel: CD3+: Mean"
 def nameStd = "ROI: ${formattedPixelSize} µm per pixel: CD3+: Std.dev."
 
 
+def cellsBase = getCellObjects()
+removeObjects(cellsBase, true)
+
 def annotations = hierarchy.getAnnotationObjects()
 def annotationIslet = annotations.findAll { it.getPathClass() == PathClassFactory.getPathClass("Islet") }
 def annotationsIsletExpanded = annotations.findAll { it.getPathClass() == PathClassFactory.getPathClass("IsletExpanded") }
+
+
 // prevents the glucagon/insulin/background detection from being removed
 def allDetections = getDetectionObjects()
 def nonCellObjects = allDetections.findAll { !(it instanceof PathCellObject) }
+
 
 // JSON parameters for IntensityFeaturesPlugin
 def jsonParamsIntensity = """{
@@ -115,22 +121,33 @@ def jsonParams = """{
     "singleThreshold": true
 }"""
 
-selectObjectsByClassification("IsletExpanded")
-runPlugin('qupath.imagej.detect.cells.PositiveCellDetection', jsonParams)
-
 addObjects(annotationIslet)
 addObjects(nonCellObjects)
 
+annotationsIsletExpanded.each { it -> 
+    getCurrentHierarchy().getSelectionModel().setSelectedObject(it, false)
+    runPlugin('qupath.imagej.detect.cells.PositiveCellDetection', jsonParams)   
+}
 
-
-// Filter to get only 'Negative' cells -> removal of objects should happend after solving hierarchy
+//// Filter to get only 'Negative' cells -> removal of objects should happend after solving hierarchy
 def cells = getCellObjects()
 def negativeCells = cells.findAll { it.getPathClass() == getPathClass("Negative") }
-
 removeObjects(negativeCells, true)
 
-selectAllObjects()
-// updated the hierarchy of the objects
-Commands.insertSelectedObjectsInHierarchy(imageData)
+// Check if annotations is not empty
+if (!annotationIslet.isEmpty()) {
+    annotationIslet.each { it -> 
+        getCurrentHierarchy().getSelectionModel().setSelectedObject(it, false)
+        Commands.insertSelectedObjectsInHierarchy(imageData) 
+    } 
+} 
+
+// Check if nonCellObjects is not empty
+if (!nonCellObjects.isEmpty()) {
+    nonCellObjects.each { it -> 
+        getCurrentHierarchy().getSelectionModel().setSelectedObject(it, false)
+        Commands.insertSelectedObjectsInHierarchy(imageData) 
+    } 
+} 
 
 fireHierarchyUpdate()
