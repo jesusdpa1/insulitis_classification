@@ -39,7 +39,11 @@ def nameStd = "ROI: ${formattedPixelSize} µm per pixel: CD3+: Std.dev."
 
 
 def annotations = hierarchy.getAnnotationObjects()
+def annotationIslet = annotations.findAll { it.getPathClass() == PathClassFactory.getPathClass("Islet") }
 def annotationsIsletExpanded = annotations.findAll { it.getPathClass() == PathClassFactory.getPathClass("IsletExpanded") }
+// prevents the glucagon/insulin/background detection from being removed
+def allDetections = getDetectionObjects()
+def nonCellObjects = allDetections.findAll { !(it instanceof PathCellObject) }
 
 // JSON parameters for IntensityFeaturesPlugin
 def jsonParamsIntensity = """{
@@ -84,12 +88,8 @@ annotationsIsletExpanded.each { it ->
 // Calculate overall mean and standard deviation
 double overallMean = totalMean / count
 double overallStdDev = totalStdDev / count
-double cd3Threshold = overallMean + (overallStdDev)
+double cd3Threshold = overallMean + ((overallStdDev))
 // Get the CD3+ cells by the std
-
-// prevents the glucagon/insulin/background detection from being removed
-def allDetections = getDetectionObjects()
-def nonCellObjects = allDetections.findAll { !(it instanceof PathCellObject) }
 
 // runs the Positive cell detection plugin
 def jsonParams = """{
@@ -101,8 +101,8 @@ def jsonParams = """{
     "sigmaMicrons": 1.5,
     "minAreaMicrons": 10.0,
     "maxAreaMicrons": 400.0,
-    "threshold": 0.1,
-    "maxBackground": 2.0,
+    "threshold": ${overallMean + ((overallStdDev * 2))},
+    "maxBackground": 1,
     "watershedPostProcess": true,
     "cellExpansionMicrons": 5.0,
     "includeNuclei": true,
@@ -118,16 +118,19 @@ def jsonParams = """{
 selectObjectsByClassification("IsletExpanded")
 runPlugin('qupath.imagej.detect.cells.PositiveCellDetection', jsonParams)
 
+addObjects(annotationIslet)
 addObjects(nonCellObjects)
 
-selectObjects()
-// updated the hierarchy of the objects
-Commands.insertSelectedObjectsInHierarchy(imageData)
+
 
 // Filter to get only 'Negative' cells -> removal of objects should happend after solving hierarchy
 def cells = getCellObjects()
 def negativeCells = cells.findAll { it.getPathClass() == getPathClass("Negative") }
 
 removeObjects(negativeCells, true)
+
+selectAllObjects()
+// updated the hierarchy of the objects
+Commands.insertSelectedObjectsInHierarchy(imageData)
 
 fireHierarchyUpdate()

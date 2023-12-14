@@ -1,3 +1,4 @@
+import qupath.lib.gui.commands.Commands;
 import org.locationtech.jts.geom.Geometry
 import qupath.lib.common.GeneralTools
 import qupath.lib.objects.PathObject
@@ -51,3 +52,9 @@ isletsList.each{ it ->
 annotationToAdd
 
 addObjects(annotationToAdd)
+
+selectAnnotations()
+// updated the hierarchy of the objects
+Commands.insertSelectedObjectsInHierarchy(imageData)
+
+fireHierarchyUpdate()
