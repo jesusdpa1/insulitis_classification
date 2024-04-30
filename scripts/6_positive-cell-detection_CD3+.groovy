@@ -1,4 +1,14 @@
-/// import libraries
+/* 
+after detection of the islet and definition of the interaction zone 
+we proceeded to detect individual CD3+ cells and run quantitative analysis
+- Number of CD3+ cells
+- - Total
+- - Within Islet Boundry 
+- - Within Expanded Boundry
+*/
+
+
+// imports all the libraries needed to 
 import qupath.lib.gui.commands.Commands;
 
 import qupath.lib.objects.PathAnnotationObject
@@ -12,13 +22,14 @@ import qupath.lib.roi.interfaces.ROI
 import static qupath.lib.scripting.QP.*
 import static qupath.lib.gui.scripting.QPEx.*
 
+
 double expandMarginMicrons = 20.0
 
-// Extract the main info we need
+// Extract the information from the current image including the annotations
 def imageData = getCurrentImageData()
 def hierarchy = imageData.getHierarchy()
 def server = imageData.getServer()
-// We need the pixel size
+// Extract the calibration information -> relation between px and um
 def cal = server.getPixelCalibration()
 def plane = ImagePlane.getDefaultPlane()
 
@@ -27,6 +38,7 @@ if (!cal.hasPixelSizeMicrons()) {
     return
 }
 
+// Gets the relation between 20um to px
 def pixelSizeMicrons = cal.getAveragedPixelSizeMicrons()
 double expandPixels = expandMarginMicrons / pixelSizeMicrons
 
@@ -37,10 +49,12 @@ def formattedPixelSize = String.format("%.2f", pixelSizeMicrons)
 def nameMean = "ROI: ${formattedPixelSize} µm per pixel: CD3+: Mean"
 def nameStd = "ROI: ${formattedPixelSize} µm per pixel: CD3+: Std.dev."
 
-
+// deletes any previous cell detection (CD3+)
 def cellsBase = getCellObjects()
 removeObjects(cellsBase, true)
 
+
+// gets all the islet and expanded islet boundry annotation
 def annotations = hierarchy.getAnnotationObjects()
 def annotationIslet = annotations.findAll { it.getPathClass() == PathClassFactory.getPathClass("Islet") }
 def annotationsIsletExpanded = annotations.findAll { it.getPathClass() == PathClassFactory.getPathClass("IsletExpanded") }
@@ -51,7 +65,11 @@ def allDetections = getDetectionObjects()
 def nonCellObjects = allDetections.findAll { !(it instanceof PathCellObject) }
 
 
-// JSON parameters for IntensityFeaturesPlugin
+/* 
+Sets the parameters for the IntensityFeaturesPlugin set to the ColorStain3 to 
+Programatically extract the thershold level to detect CD3+ cells since every image will have 
+a different intensity level
+*/
 def jsonParamsIntensity = """{
     "pixelSizeMicrons": ${formattedPixelSize},
     "region": "ROI",
@@ -91,13 +109,13 @@ annotationsIsletExpanded.each { it ->
     count++
 }
 
-// Calculate overall mean and standard deviation
+// Calculate overall mean and standard deviation for the threshold level determination
 double overallMean = totalMean / count
 double overallStdDev = totalStdDev / count
 double cd3Threshold = overallMean + ((overallStdDev))
 // Get the CD3+ cells by the std
 
-// runs the Positive cell detection plugin
+// runs the Positive cell detection plugin to quantify number of CD3+ cells based on the detected threshold
 def jsonParams = """{
     "detectionImageBrightfield": "Optical density sum",
     "requestedPixelSizeMicrons": ${pixelSizeMicrons},
@@ -129,7 +147,7 @@ annotationsIsletExpanded.each { it ->
     runPlugin('qupath.imagej.detect.cells.PositiveCellDetection', jsonParams)   
 }
 
-//// Filter to get only 'Negative' cells -> removal of objects should happend after solving hierarchy
+// Filter to get only 'Negative' cells -> removal of objects should happend after solving hierarchy
 def cells = getCellObjects()
 def negativeCells = cells.findAll { it.getPathClass() == getPathClass("Negative") }
 removeObjects(negativeCells, true)

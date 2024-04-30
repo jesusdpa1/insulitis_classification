@@ -1,5 +1,15 @@
+// Sets the image type to BRIGHTFIELD_OTHER
 setImageType('BRIGHTFIELD_OTHER');
+/* Set the deconvolution values to standardize names and ranges based on 
+Glucagon -> Blue
+Insulin -> Red
+CD3+ -> Brown
+Tissue & Background -> anything else
 
+WARNING: 
+Colors must be adjusted depending on the image used, some images might have 
+different colors for each of the stains
+*/
 setColorDeconvolutionStains("""{
     "Name" : "HE_Insulitis",
     "Stain 1" : "Glucagon",

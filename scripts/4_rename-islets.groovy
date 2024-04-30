@@ -1,3 +1,5 @@
+// Script to standardize the names of the islets and assign an number (1...N)
+
 import static qupath.lib.gui.scripting.QPEx.*
 
 // Define the base name
@@ -11,7 +13,7 @@ def hierarchy = imageData.getHierarchy()
 def counter = 1
 
 def annotations = hierarchy.getAnnotationObjects()
-
+// renames all the anotations
 annotations.each { it -> 
     def newName = "${baseName}_${counter}"
     
@@ -19,5 +21,5 @@ annotations.each { it ->
     counter++
 
 }
-
+// updates the values on the image information 
 fireHierarchyUpdate()
