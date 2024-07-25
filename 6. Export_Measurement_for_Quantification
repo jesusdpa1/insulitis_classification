@@ -1,0 +1,17 @@
+# Export Measurement for Quantification
+
+1. Calculating the area of insulin and glucagon.
+- Select all detections : **Objects -> Select -> Select detections -> Select all detections**
+- Calculate the quantification : **Analyze -> Calculate features -> Add shape features**
+
+2. Save the quantification of insulin and glucaon area of islet
+- **Measure -> Show detection measurements**
+- Save measurement result as **{slide #}_areas.txt**
+
+3. Save the quantification of the number of CD3+ in islet
+- **Measure -> Show annotation measurements**
+- Save measurement result as **{slide #}_cd3+.txt**
+
+4. Run `6_Quantification_measurement` with designating folder to extract and combine the information of single slide.
+
+  <img src="https://github.com/user-attachments/assets/927d1c33-8984-48f2-b37a-bb34c921a6da" width=50%, height=50%>
