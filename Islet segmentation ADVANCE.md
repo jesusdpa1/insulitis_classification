@@ -10,10 +10,10 @@
 
     ![color_deconvolution_1](https://github.com/user-attachments/assets/33635abd-2fd7-4fa9-9b6a-f38e986318b2)
 
-    ![Untitled](/img/islet-segmentation-advance/Untitled2.png)
+    ![color_deconvolution_2](https://github.com/user-attachments/assets/19f0de9c-b3ff-43c2-b6fd-ed97652723a8)
     
 5. Double click each channel and update the values, repeat this step until you have the three colors stain vectors
     
-    ![Untitled](/img/islet-segmentation-advance/Untitled3.png)
+    ![color_deconvolution_3](https://github.com/user-attachments/assets/bdd9f335-4f3e-4c70-b158-bd782cec56b7)
     
 6. Remove all the annotations
