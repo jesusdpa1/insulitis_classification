@@ -9,7 +9,7 @@
 - Apply SAM to the ROI box and designate as Islet Class.
 - Make square box at the non-islet area and designate as Background Class.
 - Train pixel classifier with changing the Channels(Insluin, Glucagon, CD3+) in Features edit.
-- Save pixel classifier as '{slide_number}_classifier'.
+- Save pixel classifier as **{slide_number}_classifier**.
 - Remove all squares in image and apply trained classifier, and remove all the Background annotation on the pannels.
 - Run **_2_get-bounding-box.groovy_** to get islet ROI boxes.
 - Manual modification
@@ -21,7 +21,7 @@
 - Draw square to the Insulin(red-ish), Glucagon(blue-ish) and non-islet area, and designate them into Insulin, Glucagon, Background Class.
 - Train pixel classifier with changing the Channels(Insluin, Glucagon, CD3+) in Features edit.
 - Set resolution between 'High' or 'Very high'.
-- Save pixel classifier as '{slide_number}_BGI'.
+- Save pixel classifier as **{slide_number}_BGI**.
 - Remove 3 compartment training squared box and run **_3_rename-islets.groovy'_**
 - Apply trained pixel classifier
   
@@ -30,7 +30,7 @@
 - Run **_5_positive-cell-detection_CD3+.groovy_** to quantify the number of CD3+ cells.
   
 ## 6. Export Measurement for Quantification
-- For calculating the area of insulin and glucagon, select all detections (Objects -> Select -> Select detections -> Select all detections) and calculate the measurements(Analyze -> Calculate features -> Add shape features).
-- Saving area of insulin and glucagon(Measure -> Show detection measurements), and save as '{slide_number}_areas.txt'.
-- Saving the number of CD3+ cells(Measure -> Show annotation measurements), and save as '{slide_number}_cd3+.txt'.
+- For calculating the area of insulin and glucagon, select all detections (**Objects -> Select -> Select detections -> Select all detections**) and calculate the measurements(**Analyze -> Calculate features -> Add shape features**).
+- Saving area of insulin and glucagon(**Measure -> Show detection measurements**), and save as **{slide_number}_areas.txt**.
+- Saving the number of CD3+ cells(**Measure -> Show annotation measurements**), and save as **{slide_number}_cd3+.txt**.
 - Run **_6_Quantification_measurement_** to combine measurements data and save it as CSV format.
