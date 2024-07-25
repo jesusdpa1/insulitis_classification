@@ -9,7 +9,7 @@
 4. Create a square annotation around each red-ish(insulin), blue-ish(glucagon), brown-ish(cd3+) color and select the annotation that correspond to each channel.
 
    ![color_deconvolution_1](https://github.com/user-attachments/assets/33635abd-2fd7-4fa9-9b6a-f38e986318b2)
-   <img src="color_deconvolution_1" width="48", height="48">
+   <img src="https://github.com/user-attachments/assets/33635abd-2fd7-4fa9-9b6a-f38e986318b2" width=50%, height=50%>
 
    ![color_deconvolution_2](https://github.com/user-attachments/assets/19f0de9c-b3ff-43c2-b6fd-ed97652723a8)
     
