@@ -10,6 +10,7 @@ QuPath[^1] is the main tool for visualization and processing
 
 ## Publication
 Leveraging pre-trained machine learning models for islet quantification in type 1 diabetes
+
 https://doi.org/10.1016/j.jpi.2024.100406
 
 ## Resource to learn QuPath
