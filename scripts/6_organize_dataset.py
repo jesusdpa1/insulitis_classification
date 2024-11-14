@@ -204,8 +204,6 @@ if __name__ == "__main__":
                         help="folder path for convert text to csv file")
     parser.add_argument("--organized_csv_folder", type= str, default= 'combined',
                         help="pulled out folder name")
-    #parser.add_argument("--organized_folder", type= str, default= 'combined',
-    #                    help="pulled out folder name")
     parser.add_argument("--final_folder", type= str, default= 'final',
                         help="filtered folder name")
     args = parser.parse_args()
