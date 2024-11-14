@@ -26,4 +26,6 @@ Note: This article is currently undergoing copyediting and typesetting before fi
 [^1]: https://qupath.github.io/
 
 
-## Contributors
+## Contributors 
+
+
