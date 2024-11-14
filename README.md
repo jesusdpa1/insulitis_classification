@@ -24,8 +24,3 @@ Note: This article is currently undergoing copyediting and typesetting before fi
 ## References
 
 [^1]: https://qupath.github.io/
-
-
-## Contributors 
-
-
