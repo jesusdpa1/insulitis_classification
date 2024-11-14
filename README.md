@@ -13,6 +13,8 @@ Leveraging pre-trained machine learning models for islet quantification in type 
 
 https://doi.org/10.1016/j.jpi.2024.100406
 
+Note: This article is currently undergoing copyediting and typesetting before final publication. 
+
 ## Resource to learn QuPath
 
 [a] https://www.imagescientist.com/qupath-intro
